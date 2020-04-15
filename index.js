@@ -1,5 +1,8 @@
 const express = require("express");
 const app = express();
+
+app.use(express.json());
+
 const port = process.env.PORT || 3000;
 const courses = [{
     id: 1,
@@ -12,10 +15,8 @@ const courses = [{
     name: "Chemistry"
 }, ];
 
-app.get('/', (req, res) => res.send('Hello World!'));
-
 app.get('/api/courses', (req, res) => {
-    res.send([1, 2, 3])
+    res.send(courses);
 });
 
 app.get('/api/courses/:id', (req, res) => {
@@ -24,9 +25,13 @@ app.get('/api/courses/:id', (req, res) => {
     res.send(course);
 });
 
-
-app.get('/api/posts/:year/:month', (req, res) => {
-    res.send(req.params);
+app.post('/api/courses', (req, res) => {
+    const course = {
+        id: courses.length + 1,
+        name: req.body.name
+    };
+    courses.push(course);
+    res.send(course);
 });
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
