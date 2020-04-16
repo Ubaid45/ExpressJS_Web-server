@@ -8,7 +8,8 @@ const app = express();
 
 // Configuration
 console.log("Application Name: " + config.get('name'));
-console.log("Host: " + config.get('mail.host'));
+console.log("Mail server: " + config.get('mail.host'));
+console.log("Mail password: " + config.get('mail.password'));
 
 
 if (app.get('env') === 'development') {
