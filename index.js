@@ -1,9 +1,15 @@
+const config = require("config");
 const Joi = require("joi");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require("./logger");
 const express = require("express");
 const app = express();
+
+// Configuration
+console.log("Application Name: " + config.get('name'));
+console.log("Host: " + config.get('mail.host'));
+
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
