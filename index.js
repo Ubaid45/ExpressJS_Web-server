@@ -5,6 +5,10 @@ const logger = require("./logger");
 const express = require("express");
 const app = express();
 
+if (app.get('env') === 'development') {
+    app.use(morgan('tiny'));
+    console.log('Morgan enabled...');
+}
 //Built-in middlewares
 app.use(express.json()); //req.body
 app.use(express.urlencoded({ extended: true })); //key=value&key=value
