@@ -3,7 +3,10 @@ const logger = require("./logger");
 const express = require("express");
 const app = express();
 
-app.use(express.json());
+//Built-in middlewares
+app.use(express.json()); //req.body
+app.use(express.urlencoded({ extended: true })); //key=value&key=value
+app.use(express.static('public'));
 
 app.use(logger);
 app.use(function(req, res, next) {
