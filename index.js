@@ -1,3 +1,5 @@
+const startupDebugger = require("debug")('app:startup');
+const dbDebugger = require("debug")('app:db');
 const config = require("config");
 const Joi = require("joi");
 const helmet = require("helmet");
@@ -14,8 +16,11 @@ console.log("Mail password: " + config.get('mail.password'));
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
-    console.log('Morgan enabled...');
+    startupDebugger('Morgan enabled...');
 }
+
+// DB work
+dbDebugger("Connected to the database");
 //Built-in middlewares
 app.use(express.json()); //req.body
 app.use(express.urlencoded({ extended: true })); //key=value&key=value
