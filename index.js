@@ -1,4 +1,6 @@
 const Joi = require("joi");
+const helmet = require("helmet");
+const morgan = require("morgan");
 const logger = require("./logger");
 const express = require("express");
 const app = express();
@@ -8,11 +10,10 @@ app.use(express.json()); //req.body
 app.use(express.urlencoded({ extended: true })); //key=value&key=value
 app.use(express.static('public'));
 
-app.use(logger);
-app.use(function(req, res, next) {
-    console.log("Authenticating...");
-    next();
-});
+// Third party middlewares
+app.use(helmet());
+app.use(morgan('tiny'));
+
 const port = process.env.PORT || 3000;
 const courses = [{
     id: 1,
