@@ -1,4 +1,4 @@
-In this project, first I practiced with Node core and then I practiced to build RESTful APIs with **Express**. 
+In this project, first I practiced with Node core, then I practiced to build RESTful APIs with **Express**, then it ended with **Mongoose validation**. 
 # Node Core 
 - We don’t have the window object in Node. 
 - The global object in Node is “global”. 
