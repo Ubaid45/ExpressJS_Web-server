@@ -72,6 +72,55 @@ app.listen(3000, () => console.log(‘Listening...’));
 const port = process.env.PORT || 3000;
 app.listen(port);
 ```
-## Data validation
+# Mongoose: Validation
+
 - We should never trust data sent by the client and validate always. 
 - We can use **[Joi package](https://www.npmjs.com/package/joi)** to perform input validation. 
+- When defining a schema, we can set the type of a property to a SchemaType object. We use this object to define the validation requirements for the given property.
+
+## Adding validation
+
+```javascript
+new mongoose.Schema({
+    name: { type: String, required: true }
+})
+```
+
+- Validation logic is executed by **Mongoose** prior to saving a document to the database. We can also trigger it manually by calling the **validate()** method. 
+- Built-in validators:
+  - Strings: **minlength, maxlength, match, enum** 
+  - Numbers: **min, max**
+  - Dates: **min, max**
+  - All types: **required**
+
+## Custom validation
+```javascript
+tags: [
+    type: Array,
+    validate: {
+        validator: function(v) { return v && v.length > 0; },
+        message: "A course should have at least 1 tag."
+    }
+]
+```
+
+- If we need to talk to a database or a remote service to perform the validation, we need to create an **async** validator: 
+```javascript
+validate: {
+    isAsync: true
+    validator: function(v, callback) {
+        // Do the validation, when the result is ready, call the callback
+        callback(isValid);
+    }
+}
+```
+- Other useful SchemaType properties: 
+  - Strings: **lowercase, uppercase, trim**
+  - All types: **get, set** (to define a custom getter/setter)
+```javascript
+price: {
+    type: Number,
+    get: v => Math.round(v),
+    set: v => Math.round(v)
+}
+```
